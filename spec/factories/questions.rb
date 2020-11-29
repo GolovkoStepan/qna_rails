@@ -5,6 +5,10 @@ FactoryBot.define do
     sequence(:title) { |n| "some_title #{n}" }
     sequence(:body) { |n| "some_body #{n}" }
   end
+
+  trait :with_answers do
+    answers { build_list :answer, 5 }
+  end
 end
 
 # == Schema Information
