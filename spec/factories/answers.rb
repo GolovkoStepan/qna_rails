@@ -3,6 +3,10 @@
 FactoryBot.define do
   factory :answer do
     sequence(:body) { |n| "some_body #{n}" }
+    question { nil }
+  end
+
+  trait :with_question do
     question { create :question }
   end
 end
