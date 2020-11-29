@@ -22,6 +22,11 @@ module QnaRails
   class Application < Rails::Application
     config.load_defaults 6.0
 
+    config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
+
+    config.time_zone = 'Europe/Moscow'
+
     config.generators.system_tests = nil
   end
 end
