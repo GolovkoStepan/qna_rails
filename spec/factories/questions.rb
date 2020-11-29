@@ -4,10 +4,15 @@ FactoryBot.define do
   factory :question do
     sequence(:title) { |n| "some_title #{n}" }
     sequence(:body) { |n| "some_body #{n}" }
-  end
 
-  trait :with_answers do
-    answers { build_list :answer, 5 }
+    trait :invalid do
+      title { nil }
+      body { nil }
+    end
+
+    trait :with_answers do
+      answers { build_list :answer, 5 }
+    end
   end
 end
 
