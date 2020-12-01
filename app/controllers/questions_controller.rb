@@ -3,6 +3,8 @@
 class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show]
 
+  def index; end
+
   def show; end
 
   def new
