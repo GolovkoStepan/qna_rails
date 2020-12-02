@@ -1,3 +1,7 @@
-p Index
+h1 Questions
 
-= link_to 'Log out', destroy_user_session_path, method: :delete
+- if current_user
+  p= link_to 'Create question', new_question_path
+
+- @questions.each do |question|
+  p= link_to question.title, question_path(question)

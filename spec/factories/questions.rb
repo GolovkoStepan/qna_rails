@@ -2,8 +2,9 @@
 
 FactoryBot.define do
   factory :question do
-    sequence(:title) { |n| "some_title #{n}" }
-    sequence(:body) { |n| "some_body #{n}" }
+    user { create :user }
+    sequence(:title) { |n| "some_question_title #{n}" }
+    sequence(:body) { |n| "some_question_body #{n}" }
 
     trait :invalid do
       title { nil }
@@ -25,4 +26,13 @@ end
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint           not null
+#
+# Indexes
+#
+#  index_questions_on_user_id  (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (user_id => users.id)
 #

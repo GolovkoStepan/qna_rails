@@ -2,6 +2,14 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  has_many :questions
+  has_many :answers
+
+  def created_by_me?(resource)
+    return false unless resource.respond_to?(:user_id)
+
+    id == resource.user_id
+  end
 end
 
 # == Schema Information
