@@ -1,0 +1,18 @@
+h1= @question.title
+p= @question.body
+
+- if current_user&.created_by_me?(@question)
+  = link_to 'Delete Question', question_path(@question), method: :delete
+
+h3 Answers:
+- @question.answers.each do |answer|
+  p= answer.body
+  - if current_user&.created_by_me?(answer)
+    = link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+
+- if current_user
+  h3 Add answer
+  / TODO: Надо добавить js чтобы дисейблить кнопку, пока инпут пустой
+  = simple_form_for [@question, Answer.new] do |f|
+    = f.input :body
+    = f.button :submit
