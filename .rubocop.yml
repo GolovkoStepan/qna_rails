@@ -26,6 +26,7 @@ Metrics/BlockLength:
   Max: 60
   Exclude:
     - spec/**/*
+    - config/initializers/simple_form_bootstrap.rb
 Style/ClassAndModuleChildren:
   Enabled: false
 
