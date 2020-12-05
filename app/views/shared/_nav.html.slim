@@ -1,2 +1,25 @@
-- if current_user
-  p= link_to 'Log out', destroy_user_session_path, method: :delete
+nav.navbar.navbar-expand-lg.navbar-light
+  = link_to 'QNA', root_path, class: 'navbar-brand'
+  button.navbar-toggler aria-controls="appNavbar" aria-expanded="false" aria-label=("Toggle navigation") data-target="#appNavbar" data-toggle="collapse" type="button"
+    span.navbar-toggler-icon
+  #appNavbar.collapse.navbar-collapse
+    ul.navbar-nav.ml-auto
+      - if current_user
+        li.nav-item
+          = content_tag(:li, class: (current_page?(edit_user_registration_path)) ? 'nav-item active' : 'nav-item')
+            = link_to edit_user_registration_path, class: 'nav-link' do
+              i.fas.fa-user-cog.mr-1
+              | Profile
+        li.nav-item
+          = link_to destroy_user_session_path, method: :delete, class: 'nav-link' do
+            i.fas.fa-sign-out-alt.mr-1
+            | Log out
+      - else
+        = content_tag(:li, class: (current_page?(new_user_session_path)) ? 'nav-item active' : 'nav-item')
+          = link_to new_user_session_path, class: 'nav-link' do
+            i.fas.fa-sign-in-alt.mr-1
+            | Sign In
+        = content_tag(:li, class: (current_page?(new_user_registration_path)) ? 'nav-item active' : 'nav-item')
+          = link_to new_user_registration_path, class: 'nav-link' do
+            i.fas.fa-user-plus.mr-1
+            | Sign Up
