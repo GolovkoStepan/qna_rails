@@ -7,8 +7,12 @@ feature 'User can sign up' do
 
   scenario 'User successfully signs up' do
     fill_in 'Email', with: 'newuser@test.com'
-    fill_in 'Password', with: '123456'
-    fill_in 'Password confirmation', with: '123456'
+    within '.user_password' do
+      fill_in 'Password', with: '123456'
+    end
+    within '.user_password_confirmation' do
+      fill_in 'Password confirmation', with: '123456'
+    end
     within('form') { click_on 'Sign up' }
 
     expect(page).to have_content 'Welcome! You have signed up successfully.'
