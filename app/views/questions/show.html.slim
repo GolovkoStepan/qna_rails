@@ -1,18 +1,47 @@
-h1= @question.title
-p= @question.body
+.question-title
+  .row
+    .col-lg-12
+      h3= @question.title
+      .d-flex
+        .text-muted
+          = "Asked: #{format_date(@question.created_at)}"
+        .text-muted.ml-auto
+          = "User: #{@question.user.email}"
 
-- if current_user&.created_by_me?(@question)
-  = link_to 'Delete Question', question_path(@question), method: :delete
+.separate-line
 
-h3 Answers:
-- @question.answers.each do |answer|
-  p= answer.body
-  - if current_user&.created_by_me?(answer)
-    = link_to 'Delete Answer', question_answer_path(@question, answer), method: :delete
+.question-body
+  .row
+    .col-lg-12
+      .card.min-vh-25
+        .card-body
+          = @question.body
 
-- if current_user
-  h3 Add answer
-  / TODO: Надо добавить js чтобы дисейблить кнопку, пока инпут пустой
-  = simple_form_for [@question, Answer.new] do |f|
-    = f.input :body
-    = f.button :submit
+.separate-line
+
+.question-footer
+  .row
+    .col-lg-6
+      .text-muted
+        = "Edited: #{format_date(@question.updated_at)}"
+    .col-lg-6
+      - if current_user&.created_by_me?(@question)
+        = link_to 'Delete Question', question_path(@question), method: :delete, class: 'float-lg-right'
+
+.py-3
+
+.answers
+  h4{ id="answers-count" }= "#{@question.answers.count} Answers"
+  = render @question.answers
+
+.py-3
+
+.new-answer
+  .row
+    .col-lg-12
+      h4.py-2 Your Answer
+
+      / TODO: Надо добавить js чтобы дисейблить кнопку, пока инпут пустой
+      = simple_form_for [@question, Answer.new] do |f|
+        = f.input :body, label: false
+        = f.button :submit, 'Post your answer'

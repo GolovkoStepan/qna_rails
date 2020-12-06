@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!
 
   before_action :load_answer, only: %i[destroy]
-  before_action :load_question, only: %i[create destroy]
+  before_action :load_question, only: %i[create]
 
   def create
     @answer = @question.answers.new(answer_params.merge(user: current_user))
@@ -14,10 +14,10 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    redirect_to question_path(@question) unless current_user.created_by_me?(@answer)
+    redirect_to question_path(@answer.question) unless current_user.created_by_me?(@answer)
 
     @answer.destroy
-    redirect_to question_path(@question)
+    redirect_to question_path(@answer.question)
   end
 
   private

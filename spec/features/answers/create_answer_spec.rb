@@ -13,8 +13,8 @@ feature 'User can create answer' do
     end
 
     scenario 'question answer' do
-      fill_in 'Body', with: 'answer text'
-      click_on 'Create Answer'
+      fill_in id: 'answer_body', with: 'answer text'
+      click_on 'Post your answer'
 
       expect(page).to have_content 'answer text'
     end
