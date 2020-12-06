@@ -1,0 +1,25 @@
+.answer.mt-4{ id="answer-#{answer.id}" }
+  .row.mb-2
+    .col-lg-12
+      .d-flex
+        .text-muted
+          = "Answered: #{format_date(answer.created_at)}"
+        .text-muted.ml-auto
+          = "User: #{answer.user.email}"
+
+  .row.mb-3
+    .col-lg-12
+      .card
+        .card-body
+          = answer.body
+
+  .row
+    .col-lg-6
+      .text-muted
+        = "Edited: #{format_date(answer.updated_at)}"
+    .col-lg-6
+      - if current_user&.created_by_me?(answer)
+        .text-muted.float-lg-right
+          = link_to 'Delete Answer', answer_path(answer), method: :delete
+
+  .separate-line

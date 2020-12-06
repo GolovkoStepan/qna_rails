@@ -1,7 +1,12 @@
-h1 Questions
+.row
+  .col-lg-6
+    h3 All Questions
+  .col-lg-6
+    - if current_user
+      = link_to 'Create question', new_question_path, class: 'btn btn-outline-primary float-lg-right'
 
-- if current_user
-  p= link_to 'Create question', new_question_path
+.py-2
 
-- @questions.each do |question|
-  p= link_to question.title, question_path(question)
+.row
+  .col-lg-12
+    = render @questions
