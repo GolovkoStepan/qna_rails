@@ -37,5 +37,7 @@ end
 group :test do
   gem 'capybara'
   gem 'launchy'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
+  gem 'webdrivers'
 end

@@ -1,0 +1,4 @@
+$('#question-title').html('<%= j @question.title %>')
+$('#question-body').html('<%= j @question.body %>')
+$('#question-update-at').html('Edited: <%= format_date(@question.updated_at) %>')
+$('#edit-question-form-modal').modal('hide')

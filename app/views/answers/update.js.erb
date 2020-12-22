@@ -1,0 +1,3 @@
+$('<%= "#answer-#{@answer.id}" %>').find('.card-body').html('<%= j @answer.body %>')
+$('<%= "#answer-#{@answer.id}" %>').find('.answer-update-at').html('Edited: <%= format_date(@answer.updated_at) %>')
+$('#edit-answer-form-modal').modal('hide')

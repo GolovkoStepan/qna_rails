@@ -3,21 +3,30 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
 
-  before_action :load_answer, only: %i[destroy]
+  before_action :load_answer, only: %i[destroy update mark_as_accepted]
   before_action :load_question, only: %i[create]
 
   def create
-    @answer = @question.answers.new(answer_params.merge(user: current_user))
-    @answer.save
+    @answer = @question.answers.create(answer_params.merge(user: current_user))
+  end
 
-    redirect_to question_path(@question)
+  def update
+    return head(403) unless current_user.created_by_me?(@answer)
+
+    @answer.update(answer_params)
   end
 
   def destroy
-    redirect_to question_path(@answer.question) unless current_user.created_by_me?(@answer)
+    return head(403) unless current_user.created_by_me?(@answer)
 
     @answer.destroy
-    redirect_to question_path(@answer.question)
+    head 200
+  end
+
+  def mark_as_accepted
+    return head(403) unless current_user.created_by_me?(@answer.question)
+
+    @answer.mark_as_accepted
   end
 
   private
