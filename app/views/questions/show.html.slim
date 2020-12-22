@@ -1,47 +1,58 @@
 .question-title
-  .row
+  .row.mb-2
     .col-lg-12
-      h3= @question.title
+      h3#question-title= @question.title
       .d-flex
         .text-muted
           = "Asked: #{format_date(@question.created_at)}"
         .text-muted.ml-auto
           = "User: #{@question.user.email}"
 
-.separate-line
-
-.question-body
+.question-body.mb-3
   .row
     .col-lg-12
       .card.min-vh-25
-        .card-body
+        #question-body.card-body
           = @question.body
-
-.separate-line
 
 .question-footer
   .row
-    .col-lg-6
-      .text-muted
-        = "Edited: #{format_date(@question.updated_at)}"
-    .col-lg-6
-      - if current_user&.created_by_me?(@question)
-        = link_to 'Delete Question', question_path(@question), method: :delete, class: 'float-lg-right'
+    .col-lg-12
+      .d-flex.justify-content-between
+        #question-update-at.text-muted
+          = "Edited: #{format_date(@question.updated_at)}"
+        - if current_user&.created_by_me?(@question)
+          .text-muted
+            = link_to '#', id: 'edit-question-link', data: { question_id: @question.id } do
+              i.fas.fa-edit.mr-1
+              | Edit Question
+          .text-muted
+            = link_to question_path(@question), method: :delete, class: 'float-lg-right' do
+              i.fas.fa-trash-alt.mr-1
+              | Delete Question
+
+  .separate-line
 
 .py-3
 
+h4
+  span.mr-2 id="answers-count" =@question.answers.count
+  | Answers
+
 .answers
-  h4{ id="answers-count" }= "#{@question.answers.count} Answers"
   = render @question.answers
 
 .py-3
 
-.new-answer
-  .row
-    .col-lg-12
-      h4.py-2 Your Answer
+- if current_user
+  .new-answer
+    .row
+      .col-lg-12
+        h4.py-2 Your Answer
 
-      / TODO: Надо добавить js чтобы дисейблить кнопку, пока инпут пустой
-      = simple_form_for [@question, Answer.new] do |f|
-        = f.input :body, label: false
-        = f.button :submit, 'Post your answer'
+        = simple_form_for [@question, Answer.new], remote: true do |f|
+          = f.input :body, label: false, input_html: { id: 'create_answer_input', placeholder: 'Start typing. Min 5 symbols' }
+          = f.button :submit, 'Post your answer', id: 'create_answer_btn'
+
+= render 'edit_answer_form'
+= render 'edit_question_form'

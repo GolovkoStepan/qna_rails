@@ -1,0 +1,64 @@
+# frozen_string_literal: true
+
+require 'rails_helper'
+
+feature 'User can update his question' do
+  given!(:user_author) { create(:user) }
+  given!(:other_user)  { create(:user) }
+  given!(:question)    { create(:question, user: user_author) }
+
+  scenario 'Unauthenticated can not update question' do
+    visit question_path(question)
+    expect(page).to_not have_link 'Edit Question'
+  end
+
+  describe 'Authenticated other user' do
+    background do
+      sign_in(other_user)
+      visit question_path(question)
+    end
+
+    scenario "tries to edit other user's question" do
+      expect(page).to_not have_link 'Edit Question'
+    end
+  end
+
+  describe 'Authenticated question author', js: true do
+    background do
+      sign_in(user_author)
+      visit question_path(question)
+    end
+
+    scenario 'can updates his question' do
+      click_on 'Edit Question'
+
+      fill_in id: 'edit-question-title-input', with: 'new question title'
+      fill_in id: 'edit-question-body-input', with: 'new question body'
+
+      click_on 'Save your changes'
+
+      within '#question-title' do
+        expect(page).to_not have_content question.title
+        expect(page).to have_content 'new question title'
+      end
+
+      within '#question-body' do
+        expect(page).to_not have_content question.body
+        expect(page).to have_content 'new question body'
+      end
+
+      question.reload
+      expect(question.title).to eq('new question title')
+      expect(question.body).to eq('new question body')
+    end
+
+    scenario 'updates his question with errors' do
+      click_on 'Edit Question'
+
+      fill_in id: 'edit-question-title-input', with: 'n'
+      fill_in id: 'edit-question-body-input', with: 'n'
+
+      expect(page).to_not have_button('Save your changes')
+    end
+  end
+end

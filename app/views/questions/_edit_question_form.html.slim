@@ -1,0 +1,15 @@
+#edit-question-form-modal.modal.fade aria-hidden="true" aria-labelledby="edit-form-label" role="dialog" tabindex="-1"
+  .modal-dialog.modal-xl
+    .modal-content
+      .modal-header
+        h5#edit-question-form-label.modal-title Edit Question
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true" ⨉
+      = simple_form_for :question, method: :patch, remote: true do |f|
+        .modal-body
+          = f.input :title, label: false,
+                  input_html: { id: 'edit-question-title-input', placeholder: 'Start typing. Min 5 symbols' }
+          = f.input :body, as: :text, label: false,
+                  input_html: { class: 'min-vh-25', id: 'edit-question-body-input', placeholder: 'Start typing. Min 5 symbols' }
+        .modal-footer
+          = f.submit 'Save your changes', class: 'btn btn-outline-primary', id: 'edit-question-form-btn'

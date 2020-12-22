@@ -4,10 +4,10 @@ require 'rails_helper'
 
 feature 'Authorized user can delete his question' do
   given(:other_user) { create :user }
-  given!(:question) { create :question }
+  given!(:question)  { create :question }
 
-  describe 'Authorized question owner' do
-    scenario 'question owner can delete his question' do
+  describe 'Authorized question owner', js: true do
+    scenario 'can delete his question' do
       sign_in(question.user)
 
       visit question_path(question)
@@ -17,9 +17,10 @@ feature 'Authorized user can delete his question' do
       click_on 'Delete Question'
 
       expect(page).not_to have_content question.title
+      expect { question.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
-    scenario 'other user can not delete someone else question' do
+    scenario 'can not delete someone else question' do
       sign_in(other_user)
 
       visit question_path(question)
@@ -29,7 +30,7 @@ feature 'Authorized user can delete his question' do
     end
   end
 
-  describe 'Unauthorized user' do
+  describe 'Unauthorized user', js: true do
     scenario 'trying to delete question' do
       visit question_path(question)
 

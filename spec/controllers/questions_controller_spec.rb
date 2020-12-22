@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
-  let(:user) { create :user }
+  let(:user)     { create :user }
 
   describe 'GET #show' do
     before { get :show, params: { id: question } }
@@ -19,8 +19,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { login(user) }
-    before { get :new }
+    before do
+      login(user)
+      get :new
+    end
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -55,6 +57,60 @@ RSpec.describe QuestionsController, type: :controller do
       it 're-renders new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'POST #update' do
+    let!(:question) { create :question, user: user }
+
+    context 'question owned by the current user' do
+      before { login(user) }
+
+      it 'updates question' do
+        post :update, xhr: true, params: { id: question.id, question: { title: 'new_title', body: 'new_body' } }
+
+        expect(question.reload.title).to eq('new_title')
+        expect(question.reload.body).to eq('new_body')
+        expect(response).to render_template(:update)
+      end
+    end
+
+    context 'question not owned by the current user' do
+      before { login(create(:user)) }
+
+      it 'does not update question' do
+        post :update, xhr: true, params: { id: question.id, question: { title: 'new_title', body: 'new_body' } }
+
+        expect(question.reload.title).to_not eq('new_title')
+        expect(question.reload.body).to_not eq('new_body')
+        expect(response).to have_http_status(403)
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:question) { create :question, user: user }
+
+    context 'question owned by the current user' do
+      before { login(user) }
+
+      it 'delete question' do
+        delete :destroy, xhr: true, params: { id: question.id }
+
+        expect(Question.count).to eq(0)
+        expect(response).to redirect_to(questions_path)
+      end
+    end
+
+    context 'question not owned by the current user' do
+      before { login(create(:user)) }
+
+      it 'does not delete question' do
+        delete :destroy, xhr: true, params: { id: question.id }
+
+        expect(Question.count).to eq(1)
+        expect(response).to redirect_to(question_path(question))
       end
     end
   end

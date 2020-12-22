@@ -21,6 +21,7 @@ end
 # Table name: answers
 #
 #  id          :bigint           not null, primary key
+#  accepted    :boolean          default(FALSE)
 #  body        :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

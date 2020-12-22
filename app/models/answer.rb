@@ -5,6 +5,13 @@ class Answer < ApplicationRecord
   belongs_to :question
 
   validates :body, presence: true
+
+  def mark_as_accepted
+    transaction do
+      question.answers.update_all(accepted: false)
+      update(accepted: true)
+    end
+  end
 end
 
 # == Schema Information
@@ -12,6 +19,7 @@ end
 # Table name: answers
 #
 #  id          :bigint           not null, primary key
+#  accepted    :boolean          default(FALSE)
 #  body        :text
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null

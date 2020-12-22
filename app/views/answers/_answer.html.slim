@@ -1,4 +1,4 @@
-.answer.mt-4{ id="answer-#{answer.id}" }
+.answer.mt-4 data-accepted="#{answer.accepted?}" id="answer-#{answer.id}"
   .row.mb-2
     .col-lg-12
       .d-flex
@@ -8,18 +8,33 @@
           = "User: #{answer.user.email}"
 
   .row.mb-3
-    .col-lg-12
-      .card
+    .col-1
+      .answer-info-panel
+        .accepted-answer-icon
+          i.fas.fa-check
+    .col-11
+      .card.h-100
         .card-body
           = answer.body
 
   .row
-    .col-lg-6
-      .text-muted
-        = "Edited: #{format_date(answer.updated_at)}"
-    .col-lg-6
-      - if current_user&.created_by_me?(answer)
-        .text-muted.float-lg-right
-          = link_to 'Delete Answer', answer_path(answer), method: :delete
+    .col-lg-12
+      .d-flex.justify-content-between
+        .answer-update-at.text-muted
+          = "Edited: #{format_date(answer.updated_at)}"
+        - if current_user&.created_by_me?(answer.question)
+          .text-muted
+            = link_to mark_as_accepted_answer_path(answer), class: 'accept-answer-link', method: :post, remote: true do
+              i.fas.fa-check.mr-1
+              | Mark as accepted
+        - if current_user&.created_by_me?(answer)
+          .text-muted
+            = link_to '#', class: 'edit-answer-link', data: { answer_id: answer.id } do
+              i.fas.fa-edit.mr-1
+              | Edit Answer
+          .text-muted
+            = link_to '#', class: 'delete-answer-link', data: { answer_id: answer.id } do
+              i.fas.fa-trash-alt.mr-1
+              | Delete Answer
 
   .separate-line

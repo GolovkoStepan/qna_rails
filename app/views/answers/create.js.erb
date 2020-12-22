@@ -1,0 +1,6 @@
+$('#create_answer_input').val('')
+$('#create_answer_btn').hide()
+$('.answers').append('<%= j render @answer %>')
+$('#answers-count').html(Number($('#answers-count').text()) + 1)
+
+$(document).trigger('turbolinks:load')
