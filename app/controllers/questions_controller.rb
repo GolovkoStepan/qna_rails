@@ -28,7 +28,8 @@ class QuestionsController < ApplicationController
   def update
     return head(403) unless current_user.created_by_me?(@question)
 
-    @question.update(question_params)
+    @question.update(question_params.except(:files))
+    question_params[:files].each { |file| @question.files.attach(file) } if question_params[:files]&.any?
   end
 
   def destroy
@@ -41,10 +42,10 @@ class QuestionsController < ApplicationController
   private
 
   def load_question
-    @question = Question.find(params[:id])
+    @question = Question.with_attached_files.find(params[:id])
   end
 
   def question_params
-    params.require(:question).permit(:title, :body)
+    params.require(:question).permit(:title, :body, files: [])
   end
 end

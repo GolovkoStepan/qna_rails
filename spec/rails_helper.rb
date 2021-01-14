@@ -38,6 +38,8 @@ RSpec.configure do |config|
     config.include ::Rails::Controller::Testing::TemplateAssertions, type: type
     config.include ::Rails::Controller::Testing::Integration, type: type
   end
+
+  config.after(:all) { FileUtils.rm_rf("#{Rails.root}/tmp/storage") }
 end
 
 Shoulda::Matchers.configure do |config|

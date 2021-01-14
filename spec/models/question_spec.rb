@@ -11,6 +11,7 @@ RSpec.describe Question, type: :model do
   describe 'associations' do
     it { should belong_to(:user) }
     it { should have_many(:answers) }
+    it { expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many) }
   end
 end
 

@@ -15,6 +15,10 @@
         #question-body.card-body
           = @question.body
 
+.question-attachments.my-3
+  - if @question.files.attached?
+    = render partial: 'file', collection: @question.files, locals: { resource: @question }
+
 .question-footer
   .row
     .col-lg-12

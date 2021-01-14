@@ -13,3 +13,8 @@
                   input_html: { class: 'min-vh-25', id: 'edit-question-body-input', placeholder: 'Start typing. Min 5 symbols' }
         .modal-footer
           = f.submit 'Save your changes', class: 'btn btn-outline-primary', id: 'edit-question-form-btn'
+          label.btn.btn-primary.m-0.float-right
+            i.far.fa-file.mr-2
+            | Add files
+            span{ style="display:none;" }
+              = f.file_field :files, multiple: true
