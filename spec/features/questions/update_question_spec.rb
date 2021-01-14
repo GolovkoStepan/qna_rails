@@ -35,6 +35,9 @@ feature 'User can update his question' do
       fill_in id: 'edit-question-title-input', with: 'new question title'
       fill_in id: 'edit-question-body-input', with: 'new question body'
 
+      find('#question_files', visible: false)
+        .attach_file(%W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb])
+
       click_on 'Save your changes'
 
       within '#question-title' do
@@ -46,6 +49,9 @@ feature 'User can update his question' do
         expect(page).to_not have_content question.body
         expect(page).to have_content 'new question body'
       end
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
 
       question.reload
       expect(question.title).to eq('new question title')

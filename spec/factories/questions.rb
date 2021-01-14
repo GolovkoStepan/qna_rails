@@ -14,6 +14,15 @@ FactoryBot.define do
     trait :with_answers do
       answers { build_list :answer, 5 }
     end
+
+    trait :with_files do
+      files do
+        [
+          Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb"),
+          Rack::Test::UploadedFile.new("#{Rails.root}/spec/spec_helper.rb")
+        ]
+      end
+    end
   end
 end
 

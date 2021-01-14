@@ -18,6 +18,7 @@ $(document).on('turbolinks:load', function() {
             // Добавляем текущий текст ответа в форму
             $('#edit-question-title-input').val(currentQuestionTitleText)
             $('#edit-question-body-input').val(currentQuestionBodyText)
+            $('#question_files').val(null)
             // Показываем окно
             $edit_window.modal('show')
         })

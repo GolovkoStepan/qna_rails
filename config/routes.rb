@@ -9,4 +9,6 @@ Rails.application.routes.draw do
       post :mark_as_accepted, on: :member
     end
   end
+
+  resources :attachments, only: %i[destroy]
 end
