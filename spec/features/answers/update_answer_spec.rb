@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-feature 'Authorized user can update his question' do
+feature 'Authorized user can update his answer' do
   given!(:other_user) { create :user }
   given!(:question)   { create :question }
   given!(:answer)     { create :answer, question: question }
 
   describe 'Authorized answer owner', js: true do
-    scenario 'can update his question' do
+    scenario 'can update his answer' do
       sign_in(answer.user)
 
       visit question_path(question)
@@ -19,10 +19,38 @@ feature 'Authorized user can update his question' do
 
       fill_in id: 'edit-answer-form-input', with: 'new answer text'
 
+      within '#edit-answer-form-modal' do
+        find('#answer_files', visible: false)
+          .attach_file(%W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb])
+      end
+
       click_on 'Save your changes'
 
       expect(page).to have_content('new answer text')
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+
       expect(answer.reload.body).to eq('new answer text')
+      expect(answer.files.count).to eq(2)
+    end
+
+    scenario 'can delete attached files' do
+      answer.files.attach(Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb"))
+
+      sign_in(answer.user)
+
+      visit question_path(question)
+
+      expect(page).to have_link 'rails_helper.rb'
+
+      within "#attachment-#{answer.files.first.id}" do
+        expect(page).to have_selector(class: 'delete-file-link')
+
+        click_on(class: 'delete-file-link')
+      end
+
+      expect(page).to_not have_link 'rails_helper.rb'
+      expect(answer.reload.files.count).to eq(0)
     end
 
     scenario 'can not update someone else answer' do
@@ -36,7 +64,7 @@ feature 'Authorized user can update his question' do
   end
 
   describe 'Unauthorized user', js: true do
-    scenario 'trying to delete question' do
+    scenario 'trying to delete answer' do
       visit question_path(question)
 
       expect(page).to have_content answer.body

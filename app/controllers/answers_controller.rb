@@ -13,7 +13,8 @@ class AnswersController < ApplicationController
   def update
     return head(403) unless current_user.created_by_me?(@answer)
 
-    @answer.update(answer_params)
+    @answer.update(answer_params.except(:files))
+    answer_params[:files].each { |file| @answer.files.attach(file) } if answer_params[:files]&.any?
   end
 
   def destroy
@@ -40,6 +41,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body)
+    params.require(:answer).permit(:body, files: [])
   end
 end

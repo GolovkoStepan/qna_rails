@@ -18,6 +18,11 @@
           = answer.body
 
   .row
+    .col-11.offset-lg-1
+      .answer-attachments.mb-3{ id="answer-attachments-#{answer.id}" }
+        = render partial: 'questions/file', collection: answer.files, locals: { resource: answer }
+
+  .row
     .col-lg-12
       .d-flex.justify-content-between
         .answer-update-at.text-muted

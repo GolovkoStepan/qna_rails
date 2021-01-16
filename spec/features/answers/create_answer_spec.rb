@@ -19,6 +19,20 @@ feature 'User can create answer' do
       expect(question.answers.count).to eq(1)
     end
 
+    scenario 'creates a question with attached files' do
+      fill_in id: 'create_answer_input', with: 'answer text'
+
+      within '.new-answer' do
+        find('#answer_files', visible: false)
+          .attach_file(%W[#{Rails.root}/spec/rails_helper.rb #{Rails.root}/spec/spec_helper.rb])
+      end
+
+      click_on 'Post your answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     scenario 'can not create answer with wrong length' do
       fill_in id: 'create_answer_input', with: 'a'
       expect(page).to_not have_button('Post your answer')

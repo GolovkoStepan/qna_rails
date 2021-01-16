@@ -80,6 +80,7 @@ $(document).on('turbolinks:load', function() {
             $edit_form.attr('action', '/answers/' + $(this).data('answerId'))
             // Добавляем текущий текст ответа в форму
             $('#edit-answer-form-input').val(currentAnswerText)
+            $('#answer_files').val(null)
             // Показываем окно
             $edit_window.modal('show')
         })
