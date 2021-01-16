@@ -60,7 +60,7 @@ h4
             i.far.fa-file.mr-2
             | Add files
             span{ style="display:none;" }
-              = f.file_field :files, multiple: true
+              = f.file_field :files, multiple: true, direct_upload: true
           = f.button :submit, 'Post your answer', id: 'create_answer_btn'
 
 = render 'edit_answer_form'
