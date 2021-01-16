@@ -1,5 +1,5 @@
 .d-inline-block.mr-4{id="attachment-#{file.id}"}
   = link_to file.filename.to_s, rails_blob_path(file, disposition: 'attachment')
   - if current_user&.created_by_me?(resource)
-    = link_to attachment_path(file), class: 'ml-2', method: :delete, remote: true do
+    = link_to attachment_path(file), class: 'ml-2 delete-file-link', method: :delete, remote: true do
       i.far.fa-trash-alt

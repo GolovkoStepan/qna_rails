@@ -24,12 +24,10 @@ feature 'User can update his question' do
   end
 
   describe 'Authenticated question author', js: true do
-    background do
+    scenario 'can updates his question' do
       sign_in(user_author)
       visit question_path(question)
-    end
 
-    scenario 'can updates his question' do
       click_on 'Edit Question'
 
       fill_in id: 'edit-question-title-input', with: 'new question title'
@@ -58,7 +56,30 @@ feature 'User can update his question' do
       expect(question.body).to eq('new question body')
     end
 
+    scenario 'can delete attached files' do
+      question.files.attach(Rack::Test::UploadedFile.new("#{Rails.root}/spec/rails_helper.rb"))
+
+      sign_in(user_author)
+
+      visit question_path(question)
+
+      expect(page).to have_link 'rails_helper.rb'
+
+      within "#attachment-#{question.files.first.id}" do
+        expect(page).to have_selector(class: 'delete-file-link')
+
+        click_on(class: 'delete-file-link')
+      end
+
+      expect(page).to_not have_link 'rails_helper.rb'
+      expect(question.reload.files.count).to eq(0)
+    end
+
     scenario 'updates his question with errors' do
+      sign_in(user_author)
+
+      visit question_path(question)
+
       click_on 'Edit Question'
 
       fill_in id: 'edit-question-title-input', with: 'n'
