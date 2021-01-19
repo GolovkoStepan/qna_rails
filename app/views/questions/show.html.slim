@@ -27,7 +27,7 @@
           = "Edited: #{format_date(@question.updated_at)}"
         - if current_user&.created_by_me?(@question)
           .text-muted
-            = link_to '#', id: 'edit-question-link', data: { question_id: @question.id } do
+            = link_to edit_question_path(@question), remote: true do
               i.fas.fa-edit.mr-1
               | Edit Question
           .text-muted
@@ -64,4 +64,6 @@ h4
           = f.button :submit, 'Post your answer', id: 'create_answer_btn'
 
 = render 'edit_answer_form'
-= render 'edit_question_form'
+
+#edit-question-modal-form-container
+#edit-answer-modal-form

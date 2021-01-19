@@ -82,10 +82,15 @@ feature 'User can update his question' do
 
       click_on 'Edit Question'
 
-      fill_in id: 'edit-question-title-input', with: 'n'
-      fill_in id: 'edit-question-body-input', with: 'n'
+      fill_in id: 'edit-question-title-input', with: ''
+      fill_in id: 'edit-question-body-input', with: ''
 
-      expect(page).to_not have_button('Save your changes')
+      click_on 'Save your changes'
+
+      within id: 'edit-question-form-modal' do
+        expect(page).to have_content "Title can't be blank"
+        expect(page).to have_content "Body can't be blank"
+      end
     end
   end
 end

@@ -1,0 +1,9 @@
+= simple_form_for question do |f|
+  = f.input :title
+  = f.input :body
+  = f.button :submit
+  label.btn.btn-primary.m-0.float-right
+    i.far.fa-file.mr-2
+    | Add files
+    span{ style="display:none;" }
+      = f.file_field :files, multiple: true, direct_upload: true
