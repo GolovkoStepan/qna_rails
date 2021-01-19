@@ -8,7 +8,6 @@ import 'bootstrap'
 import "@fortawesome/fontawesome-free/js/all"
 
 import './answers'
-import './questions'
 
 import '../stylesheets/application.scss'
 

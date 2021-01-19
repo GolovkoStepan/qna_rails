@@ -3,7 +3,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
 
-  before_action :load_question, only: %i[show update destroy]
+  before_action :load_question, only: %i[show edit update destroy]
 
   def index
     @questions = Question.all
@@ -17,18 +17,15 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question
-    else
-      render :new
-    end
+    @question.save ? redirect_to(@question) : render(:new)
   end
+
+  def edit; end
 
   def update
     return head(403) unless current_user.created_by_me?(@question)
+    return unless @question.update(question_params.except(:files))
 
-    @question.update(question_params.except(:files))
     question_params[:files].each { |file| @question.files.attach(file) } if question_params[:files]&.any?
   end
 

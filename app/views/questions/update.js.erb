@@ -1,5 +1,11 @@
-$('#question-title').html('<%= j @question.title %>')
-$('#question-body').html('<%= j @question.body %>')
-$('.question-attachments').html('<%= render partial: 'file', collection: @question.files, locals: { resource: @question } %>')
-$('#question-update-at').html('Edited: <%= format_date(@question.updated_at) %>')
-$('#edit-question-form-modal').modal('hide')
+if (<%= @question.valid? %>) {
+    $('#question-title').html('<%= j @question.title %>')
+    $('#question-body').html('<%= j @question.body %>')
+    $('.question-attachments').html("<%= j render partial: 'file', collection: @question.files, locals: { resource: @question } %>")
+    $('#question-update-at').html('Edited: <%= format_date(@question.updated_at) %>')
+    $('#edit-question-form-modal').modal('hide')
+} else {
+    $('#edit-question-form-modal').modal('hide')
+    $('#edit-question-modal-form-container').html("<%= j render partial: 'edit_question_form', locals: { question: @question } %>");
+    $('#edit-question-form-modal').modal('show')
+}
