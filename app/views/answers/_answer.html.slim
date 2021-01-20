@@ -34,11 +34,11 @@
               | Mark as accepted
         - if current_user&.created_by_me?(answer)
           .text-muted
-            = link_to '#', class: 'edit-answer-link', data: { answer_id: answer.id } do
+            = link_to edit_answer_path(answer), class: 'edit-answer-link', remote: true do
               i.fas.fa-edit.mr-1
               | Edit Answer
           .text-muted
-            = link_to '#', class: 'delete-answer-link', data: { answer_id: answer.id } do
+            = link_to answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true do
               i.fas.fa-trash-alt.mr-1
               | Delete Answer
 

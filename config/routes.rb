@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root to: 'questions#index'
 
   resources :questions, only: %i[index show new create edit update destroy] do
-    resources :answers, shallow: true, only: %i[create update destroy] do
+    resources :answers, shallow: true, only: %i[create edit update destroy] do
       post :mark_as_accepted, on: :member
     end
   end

@@ -54,16 +54,8 @@ h4
       .col-lg-12
         h4.py-2 Your Answer
 
-        = simple_form_for [@question, Answer.new], remote: true do |f|
-          = f.input :body, label: false, input_html: { id: 'create_answer_input', placeholder: 'Start typing. Min 5 symbols' }
-          label.btn.btn-primary.m-0.float-right
-            i.far.fa-file.mr-2
-            | Add files
-            span{ style="display:none;" }
-              = f.file_field :files, multiple: true, direct_upload: true
-          = f.button :submit, 'Post your answer', id: 'create_answer_btn'
-
-= render 'edit_answer_form'
+        #new-answer-form-container
+          = render partial: 'answers/answer_form', locals: { question: @question, answer: nil }
 
 #edit-question-modal-form-container
-#edit-answer-modal-form
+#edit-answer-modal-form-container
