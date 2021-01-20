@@ -1,0 +1,8 @@
+= simple_form_for [question, answer || Answer.new], remote: true do |f|
+  = f.input :body, label: false, input_html: { id: 'create_answer_input', placeholder: 'Start typing. Min 5 symbols' }
+  label.btn.btn-primary.m-0.float-right
+    i.far.fa-file.mr-2
+    | Add files
+    span{ style="display:none;" }
+      = f.file_field :files, multiple: true, direct_upload: true
+  = f.button :submit, 'Post your answer', id: 'create_answer_btn'

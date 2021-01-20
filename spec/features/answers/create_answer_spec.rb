@@ -34,8 +34,11 @@ feature 'User can create answer' do
     end
 
     scenario 'can not create answer with wrong length' do
-      fill_in id: 'create_answer_input', with: 'a'
-      expect(page).to_not have_button('Post your answer')
+      fill_in id: 'create_answer_input', with: ''
+
+      click_on 'Post your answer'
+
+      expect(page).to have_content "Body can't be blank"
     end
   end
 

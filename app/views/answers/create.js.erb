@@ -1,7 +1,8 @@
-$('#answer_files').val(null)
-$('#create_answer_input').val('')
-$('#create_answer_btn').hide()
-$('.answers').append('<%= j render @answer %>')
-$('#answers-count').html(Number($('#answers-count').text()) + 1)
-
-$(document).trigger('turbolinks:load')
+<% if @answer.valid? %>
+  $('.answers').append('<%= j render @answer %>')
+  $('#answers-count').html(Number($('#answers-count').text()) + 1)
+  $('#new-answer-form-container').html("<%= j render partial: 'answers/answer_form', locals: { question: @question, answer: nil } %>")
+  $(document).trigger('turbolinks:load')
+<% else %>
+  $('#new-answer-form-container').html("<%= j render partial: 'answers/answer_form', locals: { question: @question, answer: @answer } %>")
+<% end %>
