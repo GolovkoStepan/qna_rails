@@ -2,8 +2,10 @@
   $('#question-title').html('<%= j @question.title %>')
   $('#question-body').html('<%= j @question.body %>')
   $('.question-attachments').html("<%= j render partial: 'file', collection: @question.files, locals: { resource: @question } %>")
+  $('.question-links').html("<%= j render partial: 'link', collection: @question.links %>")
   $('#question-update-at').html('Edited: <%= format_date(@question.updated_at) %>')
   $('#edit-question-form-modal').modal('hide')
+  $(document).trigger('turbolinks:load');
 <% else %>
   $('#edit-question-form-modal').modal('hide')
   $('#edit-question-modal-form-container').html("<%= j render partial: 'edit_question_form', locals: { question: @question } %>");

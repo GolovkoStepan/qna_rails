@@ -7,6 +7,7 @@ ruby '2.7.2'
 
 gem 'azure-storage', require: false
 gem 'bootsnap', '>= 1.4.2', require: false
+gem 'cocoon'
 gem 'devise'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'

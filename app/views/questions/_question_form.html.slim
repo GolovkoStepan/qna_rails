@@ -2,8 +2,19 @@
   = f.input :title
   = f.input :body
   = f.button :submit
+
+  a.btn.btn-primary.float-right.ml-2 { data-toggle="collapse" href="#links" role="button" aria-expanded="false" aria-controls="links" }
+    i.fas.fa-external-link-alt.mr-2
+    | Add links
+
   label.btn.btn-primary.m-0.float-right
     i.far.fa-file.mr-2
     | Add files
     span{ style="display:none;" }
       = f.file_field :files, multiple: true, direct_upload: true
+
+  #links.collapse.mt-4
+    = f.simple_fields_for :links do |l|
+      = render 'link_fields', f: l
+    .links
+      = link_to_add_association 'Add link', f, :links

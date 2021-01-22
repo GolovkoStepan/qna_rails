@@ -75,6 +75,31 @@ feature 'User can update his question' do
       expect(question.reload.files.count).to eq(0)
     end
 
+    scenario 'can delete attached files' do
+      question.links << build(:link)
+
+      sign_in(user_author)
+
+      visit question_path(question)
+
+      expect(page).to have_link question.links.first.name
+
+      click_on 'Edit Question'
+
+      click_on 'Add links'
+
+      within '.links' do
+        click_on 'Add link'
+      end
+
+      within all('.nested-fields')[1] do
+        fill_in 'Name', with: 'Google'
+        fill_in 'Url', with: 'https://google.com'
+      end
+
+      expect(page).to have_link question.reload.links.last.name
+    end
+
     scenario 'updates his question with errors' do
       sign_in(user_author)
 

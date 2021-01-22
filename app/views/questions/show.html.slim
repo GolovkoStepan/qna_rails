@@ -16,8 +16,10 @@
           = @question.body
 
 .question-attachments.my-3
-  - if @question.files.attached?
-    = render partial: 'file', collection: @question.files, locals: { resource: @question }
+  = render partial: 'file', collection: @question.files, locals: { resource: @question }
+
+.question-links.my-3
+  = render partial: 'link', collection: @question.links
 
 .question-footer
   .row
