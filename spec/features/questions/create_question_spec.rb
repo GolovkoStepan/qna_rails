@@ -40,6 +40,26 @@ feature 'User can create question' do
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'creates a question with attached links', js: true do
+      fill_in 'Title', with: 'Some question title'
+      fill_in 'Body', with: 'Some question body'
+
+      click_on 'Add links'
+
+      within '.links' do
+        click_on 'Add link'
+      end
+
+      within '.nested-fields' do
+        fill_in 'Name', with: 'Google'
+        fill_in 'Url', with: 'https://google.com'
+      end
+
+      click_on 'Create Question'
+
+      expect(page).to have_link 'Google', href: 'https://google.com'
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do

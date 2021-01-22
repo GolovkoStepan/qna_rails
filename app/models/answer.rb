@@ -5,6 +5,7 @@ class Answer < ApplicationRecord
   belongs_to :question
 
   has_many_attached :files
+  has_many :links, as: :linkable
 
   validates :body, presence: true
 

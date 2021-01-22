@@ -1,0 +1,36 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "64661941c3f71abb5c4fcd420efb586741905a611a7858213017db463229c63d",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/questions/_link.html.slim",
+      "line": 17,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to((Unresolved Model).new.url, :class => \"mr-4\", :target => \"_blank\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "questions/update",
+          "line": 5,
+          "file": "app/views/questions/update.js.erb",
+          "rendered": {
+            "name": "questions/_link",
+            "file": "app/views/questions/_link.html.slim"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "questions/_link"
+      },
+      "user_input": "(Unresolved Model).new.url",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2021-01-22 16:53:03 +0500",
+  "brakeman_version": "4.10.0"
+}

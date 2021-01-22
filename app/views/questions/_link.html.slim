@@ -1,0 +1,19 @@
+- if link.gist?
+  = link_to '#', class: 'mr-4', data: { 'toggle' => 'modal', 'target' => "#gist-link-#{link.id}" } do
+    i.fab.fa-github.mr-2
+    = link.name
+
+  .modal.fade id="gist-link-#{link.id}" aria-hidden="true" aria-labelledby="gist-link-#{link.id}-label" role="dialog" tabindex="-1"
+    .modal-dialog.modal-dialog-scrollable
+      .modal-content
+        .modal-header
+          h5.modal-title id="gist-link-#{link.id}-label" = link.name
+          button.close aria-label="Close" data-dismiss="modal" type="button"
+            span aria-hidden="true" ⨉
+        .modal-body
+          .gist-content data-gist-id = "#{link.gist_id}"
+
+- else
+  = link_to link.url, class: 'mr-4', target: '_blank' do
+    i.fas.fa-external-link-alt.mr-2
+    = link.name

@@ -17,7 +17,13 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-    @question.save ? redirect_to(@question) : render(:new)
+
+    if @question.save
+      redirect_to @question
+    else
+      flash[:alert] = 'There were errors during creation. Check again if you entered everything correctly.'
+      render :new
+    end
   end
 
   def edit; end
@@ -43,6 +49,6 @@ class QuestionsController < ApplicationController
   end
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body, files: [], links_attributes: %i[id name url _destroy])
   end
 end
