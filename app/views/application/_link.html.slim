@@ -11,7 +11,7 @@
           button.close aria-label="Close" data-dismiss="modal" type="button"
             span aria-hidden="true" ⨉
         .modal-body
-          .gist-content data-gist-id = "#{link.gist_id}"
+          .gist-content data-gist-id = "#{link.gist_id}" data-link-id = "#{link.id}"
 
 - else
   = link_to link.url, class: 'mr-4', target: '_blank' do

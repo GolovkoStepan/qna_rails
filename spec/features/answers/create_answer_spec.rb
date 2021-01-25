@@ -33,6 +33,25 @@ feature 'User can create answer' do
       expect(page).to have_link 'spec_helper.rb'
     end
 
+    scenario 'creates a answer with attached links', js: true do
+      fill_in id: 'create_answer_input', with: 'answer text'
+
+      click_on 'Add links'
+
+      within '.links' do
+        click_on 'Add link'
+      end
+
+      within '.nested-fields' do
+        fill_in 'Name', with: 'Google'
+        fill_in 'Url', with: 'https://google.com'
+      end
+
+      click_on 'Post your answer'
+
+      expect(page).to have_link 'Google', href: 'https://google.com'
+    end
+
     scenario 'can not create answer with wrong length' do
       fill_in id: 'create_answer_input', with: ''
 
