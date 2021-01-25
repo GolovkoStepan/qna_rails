@@ -53,6 +53,38 @@ feature 'Authorized user can update his answer' do
       expect(answer.reload.files.count).to eq(0)
     end
 
+    scenario 'can attached links' do
+      answer.links << build(:link)
+
+      sign_in(answer.user)
+
+      visit question_path(question)
+
+      expect(page).to have_link answer.links.first.name
+
+      within id: "answer-#{answer.id}" do
+        click_on 'Edit Answer'
+      end
+
+      within id: 'edit-answer-modal-form-container' do
+        click_on 'Add links'
+
+        within '.links' do
+          click_on 'Add link'
+        end
+
+        within all('.nested-fields')[1] do
+          fill_in 'Name', with: 'Google'
+          fill_in 'Url', with: 'https://google.com'
+        end
+
+        click_on 'Save your changes'
+      end
+
+      expect(page).to have_link answer.reload.links.last.name
+      expect(answer.links.count).to eq(2)
+    end
+
     scenario 'can not update someone else answer' do
       sign_in(other_user)
 

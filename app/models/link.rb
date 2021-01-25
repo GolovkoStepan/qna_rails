@@ -4,7 +4,10 @@ class Link < ApplicationRecord
   belongs_to :linkable, polymorphic: true
 
   validates :name, :url, presence: true
-  validates :url, format: { with: URI::DEFAULT_PARSER.make_regexp, message: 'Wrong URl format.' }
+  validates :url, format: {
+    with: URI::DEFAULT_PARSER.make_regexp,
+    message: 'Wrong URl format. For example: https://google.com'
+  }
 
   def gist?
     url.include? 'gist.github.com'

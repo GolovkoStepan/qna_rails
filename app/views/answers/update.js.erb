@@ -2,6 +2,7 @@
   $('<%= "#answer-#{@answer.id}" %>').find('.card-body').html('<%= j @answer.body %>')
   $('<%= "#answer-#{@answer.id}" %>').find('.answer-update-at').html('Edited: <%= format_date(@answer.updated_at) %>')
   $('#answer-attachments-' + <%= @answer.id %>).html('<%= render partial: 'questions/file', collection: @answer.files, locals: { resource: @answer } %>')
+  $('#answer-links-' + <%= @answer.id %>).html("<%= j render partial: 'link', collection: @answer.links %>")
 
   $('#edit-answer-form-modal').modal('hide')
 <% else %>
