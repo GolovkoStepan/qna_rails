@@ -60,6 +60,25 @@ feature 'User can create question' do
 
       expect(page).to have_link 'Google', href: 'https://google.com'
     end
+
+    scenario 'creates a question with reward', js: true do
+      fill_in 'Title', with: 'Some question title'
+      fill_in 'Body', with: 'Some question body'
+
+      click_on 'Add reward'
+
+      within id: 'reward' do
+        fill_in 'Name', with: 'Thanks for your answer!'
+        find('#question_reward_attributes_image', visible: false)
+          .attach_file("#{Rails.root}/spec/fixtures/images/blue-circle-200.png")
+      end
+
+      click_on 'Create Question'
+
+      question = Question.last
+      expect(question.reward).to be_instance_of(Reward)
+      expect(question.reward.image).to be_present
+    end
   end
 
   scenario 'Unauthenticated user tries to ask a question' do

@@ -15,6 +15,10 @@ FactoryBot.define do
       answers { build_list :answer, 5 }
     end
 
+    trait :with_reward do
+      reward { build :reward }
+    end
+
     trait :with_files do
       files do
         [

@@ -1,0 +1,12 @@
+.row
+  .col-lg-12
+    h3 All your rewards
+
+.py-2
+
+.row
+  .col-lg-12
+    - if @rewards.any?
+      = render @rewards
+    - else
+      p You don't have any rewards yet...
