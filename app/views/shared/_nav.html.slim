@@ -6,6 +6,11 @@ nav.navbar.navbar-expand-lg.navbar-light
     ul.navbar-nav.ml-auto
       - if current_user
         li.nav-item
+          = content_tag(:li, class: (current_page?(rewards_path)) ? 'nav-item active' : 'nav-item')
+            = link_to rewards_path, class: 'nav-link' do
+              i.fas.fa-gift.mr-1
+              | My rewards
+        li.nav-item
           = content_tag(:li, class: (current_page?(edit_user_registration_path)) ? 'nav-item active' : 'nav-item')
             = link_to edit_user_registration_path, class: 'nav-link' do
               i.fas.fa-user-cog.mr-1

@@ -9,6 +9,7 @@ gem 'azure-storage', require: false
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cocoon'
 gem 'devise'
+gem 'image_processing', '~> 1.2'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'

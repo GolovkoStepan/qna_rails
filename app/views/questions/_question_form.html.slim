@@ -3,6 +3,10 @@
   = f.input :body
   = f.button :submit
 
+  a.btn.btn-primary.float-right.ml-2 { data-toggle="collapse" href="#reward" role="button" aria-expanded="false" aria-controls="reward" }
+    i.fas.fa-gift.mr-2
+    | Add reward
+
   a.btn.btn-primary.float-right.ml-2 { data-toggle="collapse" href="#links" role="button" aria-expanded="false" aria-controls="links" }
     i.fas.fa-external-link-alt.mr-2
     | Add links
@@ -10,8 +14,22 @@
   label.btn.btn-primary.m-0.float-right
     i.far.fa-file.mr-2
     | Add files
-    span{ style="display:none;" }
+    span { style="display:none;" }
       = f.file_field :files, multiple: true, direct_upload: true
+
+  #reward.collapse.mt-4
+    = f.simple_fields_for :reward do |r|
+      = r.input :name
+
+      label.btn.btn-primary.m-0
+        i.far.fa-file.mr-2
+        | Add reward image
+        span { style="display:none;" }
+          = r.input :image, direct_upload: true, input_html: { accept: 'image/png, image/jpeg, image/jpg, image/svg' }
+
+      - if question.errors.messages[:"reward.image"].present?
+        .invalid-feedback.ml-2 { style="display: inline;" }
+          | Image must be present
 
   #links.collapse.mt-4
     = f.simple_fields_for :links do |l|

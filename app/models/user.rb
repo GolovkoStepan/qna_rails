@@ -2,8 +2,10 @@
 
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+
   has_many :questions
   has_many :answers
+  has_many :rewards
 
   def created_by_me?(resource)
     return false unless resource.respond_to?(:user_id)

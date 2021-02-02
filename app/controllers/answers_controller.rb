@@ -30,6 +30,7 @@ class AnswersController < ApplicationController
     return head(403) unless current_user.created_by_me?(@answer.question)
 
     @answer.mark_as_accepted
+    @answer.question.give_reward(@answer.user)
   end
 
   private
