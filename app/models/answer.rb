@@ -13,6 +13,7 @@ class Answer < ApplicationRecord
 
   def mark_as_accepted
     transaction do
+      question.give_reward(user)
       question.answers.update_all(accepted: false)
       update(accepted: true)
     end
