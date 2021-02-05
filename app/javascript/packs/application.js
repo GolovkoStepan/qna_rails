@@ -10,6 +10,7 @@ import "@fortawesome/fontawesome-free/js/all"
 
 import './answers'
 import './gist-dynamic-load'
+import './vote'
 
 import '../stylesheets/application.scss'
 

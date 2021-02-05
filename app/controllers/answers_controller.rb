@@ -2,9 +2,10 @@
 
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-
   before_action :load_answer, only: %i[destroy edit update mark_as_accepted]
   before_action :load_question, only: %i[new create]
+
+  include OpportunityToVote
 
   def create
     @answer = @question.answers.build(answer_params.merge(user: current_user))

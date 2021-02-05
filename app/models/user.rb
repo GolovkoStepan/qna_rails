@@ -6,11 +6,10 @@ class User < ApplicationRecord
   has_many :questions
   has_many :answers
   has_many :rewards
+  has_many :votes
 
   def created_by_me?(resource)
-    return false unless resource.respond_to?(:user_id)
-
-    id == resource.user_id
+    resource.respond_to?(:user_id) ? id == resource.user_id : false
   end
 end
 

@@ -10,16 +10,19 @@
 
 .question-body.mb-3
   .row
-    .col-lg-12
+    .col-1
+      .mt-3
+        = render partial: 'shared/vote_block', locals: { resource: @question }
+    .col-11
       .card.min-vh-25
         #question-body.card-body
           = @question.body
 
-.question-attachments.my-3
-  = render partial: 'file', collection: @question.files, locals: { resource: @question }
+      .question-attachments.my-3
+        = render partial: 'file', collection: @question.files, locals: { resource: @question }
 
-.question-links.my-3
-  = render partial: 'link', collection: @question.links
+      .question-links.my-3
+        = render partial: 'link', collection: @question.links
 
 .question-footer
   .row
