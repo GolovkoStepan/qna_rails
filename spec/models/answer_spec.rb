@@ -8,10 +8,15 @@ RSpec.describe Answer, type: :model do
     it { should belong_to(:user) }
     it { expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many) }
     it { should have_many(:links) }
+    it { should have_many(:votes) }
   end
 
   describe 'validations' do
     it { should validate_presence_of(:body) }
+  end
+
+  it_behaves_like 'has_votes' do
+    let(:voteable) { create :answer, question: (create :question) }
   end
 end
 

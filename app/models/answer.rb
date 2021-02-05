@@ -11,6 +11,8 @@ class Answer < ApplicationRecord
 
   validates :body, presence: true
 
+  include HasVotes
+
   def mark_as_accepted
     transaction do
       question.give_reward(user)

@@ -1,0 +1,9 @@
+.vote-block id="#{resource.class.to_s.downcase}-#{resource.id}-vote-block"
+  = link_to polymorphic_path([:vote_plus, resource]), class: 'vote-link vote-plus', remote: true, method: :post, data: { type: 'json' } do
+    i.fas.fa-angle-up
+
+  .current-rating
+    = resource.current_rating
+
+  = link_to polymorphic_path([:vote_minus, resource]), class: 'vote-link vote-minus', remote: true, method: :post, data: { type: 'json' } do
+    i.fas.fa-angle-down

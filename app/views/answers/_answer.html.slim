@@ -9,9 +9,10 @@
 
   .row.mb-3
     .col-1
-      .answer-info-panel
-        .accepted-answer-icon
+      .answer-info-panel.mt-3
+        .accepted-answer-icon.mb-3
           i.fas.fa-check
+        = render partial: 'shared/vote_block', locals: { resource: answer }
     .col-11
       .card.h-100
         .card-body

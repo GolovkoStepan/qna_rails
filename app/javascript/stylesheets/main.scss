@@ -14,9 +14,18 @@ body {
   height: 200px;
 }
 
-.accepted-answer-icon {
-  font-size: 35px;
+.accepted-answer-icon, .vote-block {
   color: #2108e3;
-  margin: 27%;
-  text-align: center;
+
+  .current-rating {
+    font-size: 25px;
+    text-align: center;
+  }
+
+  svg {
+    font-size: 35px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

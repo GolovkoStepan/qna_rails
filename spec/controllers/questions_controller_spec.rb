@@ -114,4 +114,10 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
   end
+
+  it_behaves_like 'opportunity_to_vote' do
+    let(:user)     { create :user }
+    let(:author)   { create :user }
+    let(:resource) { create(:question, user: author) }
+  end
 end
