@@ -16,6 +16,9 @@ class Question < ApplicationRecord
   validates :title, :body, presence: true
 
   include HasVotes
+  include HasComments
+
+  register_changes_tracker_for :create
 
   def give_reward(user)
     reward&.update(user: user)

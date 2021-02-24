@@ -1,0 +1,13 @@
+#new-comment-form-modal.modal aria-hidden="true" aria-labelledby="new-form-label" role="dialog" tabindex="-1"
+  .modal-dialog.modal-xl
+    .modal-content
+      .modal-header
+        h5#new-comment-form-label.modal-title Add Comment
+        button.close aria-label="Close" data-dismiss="modal" type="button"
+          span aria-hidden="true" ⨉
+      = simple_form_for [commentable, comment], method: :post, remote: true do |f|
+        .modal-body
+          = f.input :body, as: :text, label: false,
+                  input_html: { class: 'min-vh-25', id: 'new-comment-form-input' }
+        .modal-footer
+          = f.submit 'Add your comment', class: 'btn btn-outline-primary', id: 'edit-answer-form-btn'

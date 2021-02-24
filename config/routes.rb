@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'comments/new'
+  get 'comments/create'
   devise_for :users
   root to: 'questions#index'
 
@@ -11,8 +13,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: %i[voteable], only: %i[index show new create edit update destroy] do
-    resources :answers, concerns: %i[voteable], shallow: true, only: %i[create edit update destroy] do
+  concern :commentable do
+    resources :comments, only: %i[new create]
+  end
+
+  resources :questions, concerns: %i[voteable commentable], only: %i[index show new create edit update destroy] do
+    resources :answers, concerns: %i[voteable commentable], shallow: true, only: %i[create edit update destroy] do
       post :mark_as_accepted, on: :member
     end
   end

@@ -8,6 +8,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:answers) }
     it { should have_many(:rewards) }
     it { should have_many(:votes) }
+    it { should have_many(:comments) }
   end
 
   describe 'validations' do

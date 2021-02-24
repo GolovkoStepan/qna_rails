@@ -1,0 +1,2 @@
+$('#new-comment-modal-form-container').html("<%= j render partial: 'new_comment_form', locals: { commentable: @commentable, comment: @comment } %>");
+$('#new-comment-form-modal').modal('show')

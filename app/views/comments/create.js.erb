@@ -1,0 +1,8 @@
+<% if @comment.valid? %>
+  $('#<%= @commentable.class.to_s.downcase %>-<%= @commentable.id %>-comments-block').append("<%= j render partial: 'comment', locals: { comment: @comment }%>");
+  $('#new-comment-form-modal').modal('hide');
+<% else %>
+  $('#new-comment-form-modal').modal('hide');
+  $('#new-comment-modal-form-container').html("<%= j render partial: 'new_comment_form', locals: { commentable: @commentable, comment: @comment } %>");
+  $('#new-comment-form-modal').modal('show');
+<% end %>
