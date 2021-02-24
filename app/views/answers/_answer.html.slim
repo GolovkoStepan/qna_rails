@@ -29,6 +29,14 @@
         = render partial: 'link', collection: answer.links
 
   .row
+    .col-11.offset-lg-1
+      .separate-line
+      .answer-comments.my-3
+        .mb-2 id="answer-#{answer.id}-comments-block"
+          = render partial: 'comments/comment', collection: answer.comments
+        = link_to 'Add Comment', (current_user.present? ? new_answer_comment_path(answer) : new_user_session_path), remote: current_user.present?
+
+  .row
     .col-lg-12
       .d-flex.justify-content-between
         .answer-update-at.text-muted

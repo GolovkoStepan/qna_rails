@@ -12,6 +12,9 @@ class Answer < ApplicationRecord
   validates :body, presence: true
 
   include HasVotes
+  include HasComments
+
+  register_changes_tracker_for :create
 
   def mark_as_accepted
     transaction do

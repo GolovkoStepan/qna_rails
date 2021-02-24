@@ -65,4 +65,29 @@ feature 'User can create answer' do
     visit question_path(question)
     expect(page).to_not have_selector('#create_answer_input')
   end
+
+  context 'multiple sessions' do
+    scenario "answer appears on another user's page", js: true do
+      Capybara.using_session('user') do
+        sign_in(question.user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('guest') do
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        fill_in id: 'create_answer_input', with: 'answer text'
+        click_on 'Post your answer'
+
+        expect(page).to have_content 'answer text'
+        expect(question.answers.count).to eq(1)
+      end
+
+      Capybara.using_session('guest') do
+        expect(page).to have_content 'answer text'
+      end
+    end
+  end
 end

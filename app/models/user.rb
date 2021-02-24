@@ -7,6 +7,7 @@ class User < ApplicationRecord
   has_many :answers
   has_many :rewards
   has_many :votes
+  has_many :comments
 
   def created_by_me?(resource)
     resource.respond_to?(:user_id) ? id == resource.user_id : false

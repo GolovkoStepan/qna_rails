@@ -9,6 +9,7 @@ RSpec.describe Question, type: :model do
     it { expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many) }
     it { should have_many(:links) }
     it { should have_many(:votes) }
+    it { should have_many(:comments) }
   end
 
   describe 'validations' do

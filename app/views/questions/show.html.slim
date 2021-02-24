@@ -24,6 +24,16 @@
       .question-links.my-3
         = render partial: 'link', collection: @question.links
 
+      .separate-line
+      .question-comments.my-3
+        .mb-2 id="question-#{@question.id}-comments-block"
+          = render partial: 'comments/comment', collection: @question.comments
+        /! TODO:
+           Показался интересным такой подход для доступа к функционалу
+           Было бы еще круче, если сделать ссылку для авторизации с каким-нить параметром redirect_url, чтобы после
+           авторизации редиректить назад на эту страницу, а не на root
+        = link_to 'Add Comment', (current_user.present? ? new_question_comment_path(@question) : new_user_session_path), remote: current_user.present?
+
 .question-footer
   .row
     .col-lg-12
@@ -64,3 +74,4 @@ h4
 
 #edit-question-modal-form-container
 #edit-answer-modal-form-container
+#new-comment-modal-form-container
