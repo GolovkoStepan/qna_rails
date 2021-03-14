@@ -6,7 +6,7 @@ feature 'User can sign up' do
   background { visit new_user_registration_path }
 
   scenario 'User successfully signs up' do
-    fill_in 'Email', with: 'newuser@test.com'
+    fill_in 'Nickname', with: SecureRandom.alphanumeric(30)
     within '.user_password' do
       fill_in 'Password', with: '123456'
     end
@@ -21,7 +21,7 @@ feature 'User can sign up' do
   scenario 'User unsuccessfully signs up' do
     within('form') { click_on 'Sign up' }
 
-    expect(page).to have_content "Email can't be blank"
+    expect(page).to have_content "Nickname can't be blank"
     expect(page).to have_content "Password can't be blank"
   end
 end

@@ -17,8 +17,16 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 
 require 'sidekiq/testing'
+require 'capybara/email/rspec'
 
 Sidekiq::Testing.inline!
+
+ActiveJob::Base.queue_adapter = :test
+
+WebMock.disable_net_connect!(
+  allow_localhost: true,
+  allow: 'https://chromedriver.storage.googleapis.com'
+)
 
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods

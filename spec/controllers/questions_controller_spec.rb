@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:question) { create(:question) }
-  let(:user)     { create :user }
+  let(:user)     { create :user, :confirmed }
 
   describe 'GET #show' do
     before { get :show, params: { id: question } }

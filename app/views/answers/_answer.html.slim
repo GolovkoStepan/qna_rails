@@ -5,7 +5,7 @@
         .text-muted
           = "Answered: #{format_date(answer.created_at)}"
         .text-muted.ml-auto
-          = "User: #{answer.user.email}"
+          = "User: #{answer.user.full_name}"
 
   .row.mb-3
     .col-1

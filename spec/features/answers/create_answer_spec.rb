@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 feature 'User can create answer' do
-  given!(:question) { create(:question) }
+  given!(:question) { create(:question, user: create(:user, :confirmed)) }
 
   describe 'Authenticated user', js: true do
     background do

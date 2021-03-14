@@ -2,7 +2,7 @@
   .col-lg-6
     h3 All Questions
   .col-lg-6
-    - if current_user
+    - if current_user&.confirmed?
       = link_to 'Create question', new_question_path, class: 'btn btn-outline-primary float-lg-right'
 
 .py-2

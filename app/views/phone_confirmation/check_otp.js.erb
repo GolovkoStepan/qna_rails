@@ -1,0 +1,5 @@
+<% if @result %>
+  $('#phone-confirmation-block').html('<div class="mt-2 mb-3"><i class="fas fa-check-circle"></i> Phone number is confirmed!</div>')
+<% else %>
+  $('#phone-confirmation-block').html('<div class="mt-2 mb-3"><i class="fas fa-times-circle"></i> An error occurred while validating the code. The code is out of date or has not been generated. Or did you enter it wrong? Try again!</div>' + "<%= j render partial: 'phone_confirmation/form' %>")
+<% end %>

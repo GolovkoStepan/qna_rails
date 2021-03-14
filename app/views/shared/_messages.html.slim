@@ -1,10 +1,12 @@
 - if notice
+  .py-4
   .alert.alert-info.alert-dismissible.fade.show.m-0 role="alert"
     = notice.html_safe
     button.close aria-label="Close" data-dismiss="alert" type="button"
       span aria-hidden="true" ⨉
 
 - if alert
+  .py-4
   .alert.alert-danger.alert-dismissible.fade.show.m-0 role="alert"
     = alert.html_safe
     button.close aria-label="Close" data-dismiss="alert" type="button"

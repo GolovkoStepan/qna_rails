@@ -1,0 +1,9 @@
+p A confirmation code has been sent to your phone, please enter it in the field and click "Check code"
+= simple_form_for :otp_code,
+        url: phone_confirmation_check_otp_path,
+        method: :post,
+        remote: true,
+        wrapper: :inline_form,
+        html: { class: "form-inline" } do |f|
+  = f.input :code, as: :numeric, input_html: { class: 'form-control form-control-sm' }
+  = f.submit 'Check code', class: 'ml-2 btn btn-sm btn-outline-primary'

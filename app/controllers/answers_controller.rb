@@ -8,6 +8,8 @@ class AnswersController < ApplicationController
   include OpportunityToVote
 
   def create
+    return head(403) unless current_user.confirmed?
+
     @answer = @question.answers.build(answer_params.merge(user: current_user))
     @answer.save
   end
