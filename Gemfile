@@ -13,8 +13,9 @@ gem 'image_processing', '~> 1.2'
 gem 'jbuilder', '~> 2.7'
 gem 'pg', '>= 0.18', '< 2.0'
 gem 'puma', '~> 4.1'
-gem 'rails', '~> 6.1.3'
+gem 'rails', '~> 6.1'
 gem 'redis'
+gem 'rest-client'
 gem 'sass-rails', '>= 6'
 gem 'sidekiq'
 gem 'simple_form'
@@ -33,8 +34,11 @@ group :development, :test do
 end
 
 group :development do
+  gem 'letter_opener'
   gem 'listen', '~> 3.2'
   gem 'rubocop', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'web-console', '>= 3.3.0'
@@ -42,8 +46,10 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-email'
   gem 'launchy'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', '~> 4.0'
   gem 'webdrivers'
+  gem 'webmock'
 end

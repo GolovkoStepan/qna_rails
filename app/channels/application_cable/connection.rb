@@ -9,7 +9,7 @@ module ApplicationCable
         self.current_user = cached_user_instance(id)
       end
 
-      logger.add_tags 'ActionCable', (current_user&.email || 'Anonymous')
+      logger.add_tags 'ActionCable', "Username - #{current_user&.nickname || 'Anonymous'}"
     end
 
     private

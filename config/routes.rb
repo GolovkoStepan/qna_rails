@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'comments/new'
-  get 'comments/create'
-  devise_for :users
+  devise_for :users, controllers: { registrations: 'registrations' }
+
   root to: 'questions#index'
 
   concern :voteable do
@@ -25,4 +24,12 @@ Rails.application.routes.draw do
 
   resources :attachments, only: %i[destroy]
   resources :rewards, only: %i[index]
+
+  # Phone number confirmation
+  get 'users/send_otp', to: 'phone_confirmation#send_otp', as: 'phone_confirmation_send_otp'
+  post 'users/check_otp', to: 'phone_confirmation#check_otp', as: 'phone_confirmation_check_otp'
+
+  # Email confirmation
+  get 'users/send_confirmation_email', to: 'email_confirmation#send_email', as: 'email_confirmation_send_email'
+  get 'users/check_token', to: 'email_confirmation#check_token', as: 'email_confirmation_check_token'
 end

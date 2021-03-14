@@ -3,5 +3,5 @@
     .py-1
       .mr-2.d-inline= comment.body
       |⎯
-      = link_to comment.user.email, '#', class: 'ml-2 d-inline-block'
+      = link_to comment.user.full_name, '#', class: 'ml-2 d-inline-block'
       .text-muted.ml-2.d-inline-block= format_date(comment.created_at)

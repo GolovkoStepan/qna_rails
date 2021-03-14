@@ -13,11 +13,15 @@ class QuestionsController < ApplicationController
   def show; end
 
   def new
+    return head(403) unless current_user.confirmed?
+
     @question = Question.new
     @question.reward = Reward.new
   end
 
   def create
+    return head(403) unless current_user.confirmed?
+
     @question = current_user.questions.new(question_params)
 
     if @question.save

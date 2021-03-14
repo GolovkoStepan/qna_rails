@@ -11,11 +11,12 @@ html
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = render 'shared/nav'
-    = render 'shared/messages'
 
     .container
       .row
         .col-lg-12
+          = render 'shared/messages'
+
           .py-4
           = yield
           .py-4

@@ -6,7 +6,7 @@
         .text-muted
           = "Asked: #{format_date(@question.created_at)}"
         .text-muted.ml-auto
-          = "User: #{@question.user.email}"
+          = "User: #{@question.user.full_name}"
 
 .question-body.mb-3
   .row
@@ -63,7 +63,7 @@ h4
 
 .py-3
 
-- if current_user
+- if current_user&.confirmed?
   .new-answer
     .row
       .col-lg-12
