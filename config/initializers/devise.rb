@@ -24,4 +24,14 @@ Devise.setup do |config|
   config.reset_password_within = 6.hours
 
   config.sign_out_via = :delete
+
+  config.omniauth :github,
+                  ENV['OAUTH2_GITHUB_CLIENT'],
+                  ENV['OAUTH2_GITHUB_SECRET'],
+                  scope: 'user:email, read:user'
+
+  config.omniauth :vkontakte,
+                  ENV['OAUTH2_VK_CLIENT'],
+                  ENV['OAUTH2_VK_SECRET'],
+                  scope: 'email'
 end

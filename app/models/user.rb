@@ -1,14 +1,16 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable,
-         authentication_keys: [:login]
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable, :omniauthable,
+         authentication_keys: [:login],
+         omniauth_providers: %i[github vkontakte]
 
   has_many :questions
   has_many :answers
   has_many :rewards
   has_many :votes
   has_many :comments
+  has_many :oauth_providers, dependent: :destroy
 
   validates :nickname, presence: true
   validates :nickname, uniqueness: true, if: :nickname?

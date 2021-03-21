@@ -9,6 +9,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:rewards) }
     it { should have_many(:votes) }
     it { should have_many(:comments) }
+    it { should have_many(:oauth_providers) }
   end
 
   describe 'validations' do
