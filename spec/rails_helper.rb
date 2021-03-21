@@ -23,6 +23,8 @@ Sidekiq::Testing.inline!
 
 ActiveJob::Base.queue_adapter = :test
 
+OmniAuth.config.test_mode = true
+
 WebMock.disable_net_connect!(
   allow_localhost: true,
   allow: 'https://chromedriver.storage.googleapis.com'
@@ -34,6 +36,7 @@ RSpec.configure do |config|
   config.include ControllerHelpers, type: :controller
   config.include FeatureHelpers, type: :feature
   config.include Capybara::DSL, type: :feature
+  config.include(OmniauthMacros)
 
   Capybara.javascript_driver = :selenium_chrome_headless
 
