@@ -55,6 +55,11 @@ jobs:
           cp config/database.ci.yml config/database.yml
           rake db:create db:migrate
 
+      - name: Bundle audit
+        run: |
+          gem install bundler-audit
+          bundle-audit
+
       - name: Run rubocop
         run: rubocop
 

@@ -110,7 +110,7 @@ RSpec.describe QuestionsController, type: :controller do
         delete :destroy, xhr: true, params: { id: question.id }
 
         expect(Question.count).to eq(1)
-        expect(response).to redirect_to(question_path(question))
+        expect(response).to have_http_status(403)
       end
     end
   end

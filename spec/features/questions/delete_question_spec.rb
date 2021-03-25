@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 feature 'Authorized user can delete his question' do
-  given(:other_user) { create :user }
+  given(:other_user) { create :user, :confirmed }
   given!(:question)  { create :question }
 
   describe 'Authorized question owner', js: true do

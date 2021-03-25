@@ -28,10 +28,6 @@
       .question-comments.my-3
         .mb-2 id="question-#{@question.id}-comments-block"
           = render partial: 'comments/comment', collection: @question.comments
-        /! TODO:
-           Показался интересным такой подход для доступа к функционалу
-           Было бы еще круче, если сделать ссылку для авторизации с каким-нить параметром redirect_url, чтобы после
-           авторизации редиректить назад на эту страницу, а не на root
         = link_to 'Add Comment', (current_user.present? ? new_question_comment_path(@question) : new_user_session_path), remote: current_user.present?
 
 .question-footer
@@ -40,11 +36,12 @@
       .d-flex.justify-content-between
         #question-update-at.text-muted
           = "Edited: #{format_date(@question.updated_at)}"
-        - if current_user&.created_by_me?(@question)
+        - if policy(@question).edit?
           .text-muted
             = link_to edit_question_path(@question), remote: true do
               i.fas.fa-edit.mr-1
               | Edit Question
+        - if policy(@question).destroy?
           .text-muted
             = link_to question_path(@question), method: :delete, class: 'float-lg-right' do
               i.fas.fa-trash-alt.mr-1
@@ -63,7 +60,7 @@ h4
 
 .py-3
 
-- if current_user&.confirmed?
+- if policy(Answer).create?
   .new-answer
     .row
       .col-lg-12

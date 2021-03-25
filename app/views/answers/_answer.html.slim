@@ -41,16 +41,17 @@
       .d-flex.justify-content-between
         .answer-update-at.text-muted
           = "Edited: #{format_date(answer.updated_at)}"
-        - if current_user&.created_by_me?(answer.question)
+        - if Pundit.policy(current_user, answer).mark_as_accepted?
           .text-muted
             = link_to mark_as_accepted_answer_path(answer), class: 'accept-answer-link', method: :post, remote: true do
               i.fas.fa-check.mr-1
               | Mark as accepted
-        - if current_user&.created_by_me?(answer)
+        - if Pundit.policy(current_user, answer).edit?
           .text-muted
             = link_to edit_answer_path(answer), class: 'edit-answer-link', remote: true do
               i.fas.fa-edit.mr-1
               | Edit Answer
+        - if Pundit.policy(current_user, answer).destroy?
           .text-muted
             = link_to answer_path(answer), class: 'delete-answer-link', method: :delete, remote: true do
               i.fas.fa-trash-alt.mr-1

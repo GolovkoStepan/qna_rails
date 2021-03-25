@@ -7,30 +7,34 @@ class AnswersController < ApplicationController
 
   include OpportunityToVote
 
-  def create
-    return head(403) unless current_user.confirmed?
+  rescue_from Pundit::NotAuthorizedError, with: :authorization_error
 
+  def create
     @answer = @question.answers.build(answer_params.merge(user: current_user))
+    authorize @answer
+
     @answer.save
   end
 
-  def edit; end
+  def edit
+    authorize @answer
+  end
 
   def update
-    return head(403) unless current_user.created_by_me?(@answer)
+    authorize @answer
     return unless @answer.update(answer_params.except(:files))
 
     answer_params[:files].each { |file| @answer.files.attach(file) } if answer_params[:files]&.any?
   end
 
   def destroy
-    return head(403) unless current_user.created_by_me?(@answer)
+    authorize @answer
 
     @answer.destroy
   end
 
   def mark_as_accepted
-    return head(403) unless current_user.created_by_me?(@answer.question)
+    authorize @answer
 
     @answer.mark_as_accepted
   end

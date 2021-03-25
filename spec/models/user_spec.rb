@@ -53,6 +53,7 @@ end
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  admin                  :boolean          default(FALSE)
 #  date_of_birth          :date
 #  email                  :string           default(""), not null
 #  email_confirmed        :boolean          default(FALSE)
