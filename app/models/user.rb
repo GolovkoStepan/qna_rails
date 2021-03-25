@@ -29,6 +29,8 @@ class User < ApplicationRecord
   end
 
   def created_by_me?(resource)
+    return false if resource.new_record?
+
     resource.respond_to?(:user_id) ? id == resource.user_id : false
   end
 
@@ -76,6 +78,7 @@ end
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  admin                  :boolean          default(FALSE)
 #  date_of_birth          :date
 #  email                  :string           default(""), not null
 #  email_confirmed        :boolean          default(FALSE)

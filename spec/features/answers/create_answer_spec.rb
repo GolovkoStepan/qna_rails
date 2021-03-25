@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 feature 'User can create answer' do
-  given!(:question) { create(:question, user: create(:user, :confirmed)) }
+  given!(:question) { create(:question) }
 
   describe 'Authenticated user', js: true do
     background do
@@ -82,7 +82,7 @@ feature 'User can create answer' do
         click_on 'Post your answer'
 
         expect(page).to have_content 'answer text'
-        expect(question.answers.count).to eq(1)
+        expect(question.reload.answers.count).to eq(1)
       end
 
       Capybara.using_session('guest') do
