@@ -6,23 +6,27 @@ class QuestionsController < ApplicationController
 
   include OpportunityToVote
 
+  rescue_from Pundit::NotAuthorizedError, with: :authorization_error
+
   def index
     @questions = Question.all
+    authorize @questions
   end
 
-  def show; end
+  def show
+    authorize @question
+  end
 
   def new
-    return head(403) unless current_user.confirmed?
-
     @question = Question.new
+    authorize @question
+
     @question.reward = Reward.new
   end
 
   def create
-    return head(403) unless current_user.confirmed?
-
     @question = current_user.questions.new(question_params)
+    authorize @question
 
     if @question.save
       redirect_to @question
@@ -32,17 +36,19 @@ class QuestionsController < ApplicationController
     end
   end
 
-  def edit; end
+  def edit
+    authorize @question
+  end
 
   def update
-    return head(403) unless current_user.created_by_me?(@question)
+    authorize @question
     return unless @question.update(question_params.except(:files))
 
     question_params[:files].each { |file| @question.files.attach(file) } if question_params[:files]&.any?
   end
 
   def destroy
-    return redirect_to(question_path(@question)) unless current_user.created_by_me?(@question)
+    authorize @question
 
     @question.destroy
     redirect_to questions_path

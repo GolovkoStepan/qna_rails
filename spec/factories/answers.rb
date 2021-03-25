@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :answer do
     sequence(:body) { |n| "some_answer_body #{n}" }
     question { nil }
-    user { create :user }
+    user { create :user, :confirmed }
 
     trait :invalid do
       body { nil }

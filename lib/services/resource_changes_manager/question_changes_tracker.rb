@@ -3,7 +3,7 @@
 class Services::ResourceChangesManager::QuestionChangesTracker
   class << self
     def create(question)
-      Broadcast::Question::CreateTrackerWorker.perform_async(question.id)
+      Broadcast::Question::CreateTrackerWorker.perform_in(1.seconds, question.id)
     end
   end
 end

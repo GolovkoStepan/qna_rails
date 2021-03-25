@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :question do
-    user { create :user }
+    user { create :user, :confirmed }
     sequence(:title) { |n| "some_question_title #{n}" }
     sequence(:body) { |n| "some_question_body #{n}" }
 
